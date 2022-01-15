@@ -1,0 +1,293 @@
+<div class="main-content" style="margin-top: 30px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" style="margin-top: 0px;">
+                    <div class="card-header row">
+                        <div class="col-12 row col-md-8">
+                            <div class="col-12  col-md-8" style="margin-top: 15px;">
+                                <select class="form-control list-group list-group-flush" id="item_Name"
+                                    name="productCart.item_Name" [(ngModel)]="productCart.item_Name"
+                                    [ngModelOptions]="{ standalone: true }" #item_Code="ngModel">
+                                    <option *ngFor="let prod of listProduct" [ngValue]="prod.itemName">{{prod.itemName}}
+                                    </option>
+                                </select>
+
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Quantity</mat-label>
+                                    <input matInput id="quantity" name="quantity" [(ngModel)]="productCart.quantity"
+                                        #quantity='ngModel' placeholder="Type here">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                        <div class="col-12 row col-md-4">
+                            <div class="col-6 col-md-7" style="text-align: center; margin-top: 5px; float: right;">
+                                <button mat-raised-button (click)="addProduct()"
+                                    style="width: 110px; background-color: rgb(26, 44, 94); height: 45px; float: right; color: white;">
+                                    + Add </button>
+                            </div>
+                            <!-- <div class="col-2" style="text-align: center; margin-top: 5px; float: right;">
+                                <button mat-raised-button  style="width: 110px; background-color: rgb(26, 44, 94); height: 45px; float: right; color: white;">   Save Cart   </button>
+                            </div> -->
+                            <div class="col-6 col-md-5" style="text-align: center; margin-top: 5px; float: right;">
+                                <button mat-raised-button (click)="printBill()"
+                                    style="width: 110px; background-color: rgb(26, 44, 94); height: 45px; float: right; color: white;">
+                                    Print </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table-bordered" style="height: 350px;">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Product Name
+                                    </th>
+                                    <th>
+                                        Retail Price
+                                    </th>
+                                    <th>
+                                        Discount
+                                    <th>
+                                        Discounted Price
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Total Price
+                                    </th>
+                                    <th></th>
+                                </thead>
+                                <tbody *ngFor="let prod of productArray">
+                                    <tr>
+                                        <td>{{prod.item_Name}}</td>
+                                        <td>{{prod.retail_Price}}</td>
+                                        <td>
+                                            <label for=""> <input type="number" name="discount" id="discount"
+                                                    (keyup)="calculateDiscount(prod)" [(ngModel)]="prod.discount"
+                                                    #discount='ngModel' placeholder="Type here"></label>
+                                        </td>
+                                        <td>{{prod.discounted}}</td>
+                                        <!-- <td>{{prod.retail_Price - prod.discount}}</td> -->
+                                        <!-- <td>{{calculateDiscount(prod)}}</td> -->
+                                        <td>{{prod.quantity}}</td>
+                                        <td>{{calculateTotalAmount(prod)}}</td>
+                                        <!-- <td>{{prod.total_Amount}}</td> -->
+                                        <!-- <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" (click)="editItem(cat)" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td> -->
+                                        <td>
+                                            <button mat-raised-button (click)="deleteItem(prod)"
+                                                class="btn btn-danger btn-sm"><span class="material-icons">
+                                                    delete_forever
+                                                </span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="col-md-12 row">
+                                        <div class="col-md-4 col-12"
+                                            style="text-align: center; margin-top: 10px; float: right;">
+                                            <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                class="example-full-width" appearance="fill">
+                                                <mat-label>Customer Name</mat-label>
+                                                <input matInput placeholder="Ex. Nimal Pieris" id="customer_Name" name="customer_Name" [(ngModel)]="productVM.customer_Name"
+                                                #customer_Name='ngModel'>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-12"
+                                            style="text-align: center; margin-top: 10px; float: right;">
+                                            <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                class="example-full-width" appearance="fill">
+                                                <mat-label>Telephone </mat-label>
+                                                <input matInput placeholder="Ex. 070 310 90 73" id="customer_Mobile" name="customer_Mobile" [(ngModel)]="productVM.customer_Mobile"
+                                                #customer_Mobile='ngModel'>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-5 col-12"
+                                            style="text-align: center; margin-top: 10px; float: right;">
+                                            <!-- <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                class="example-full-width" appearance="fill"> -->
+                                            <label>Payment Type</label> <br>
+                                            <input class="ml-2" (change)="changePaymentType($event)" type="radio"
+                                                value="cash" name="payType" ngModel> Cash
+                                            <input class="ml-2" (change)="changePaymentType($event)" type="radio"
+                                                value="cheque" name="payType" ngModel>
+                                            Cheque
+                                            <input class="ml-2" (change)="changePaymentType($event)" type="radio"
+                                                value="card" name="payType" ngModel> Card
+
+                                            <!-- </mat-form-field> -->
+                                        </div>
+                                        <div class="row col-md-12">
+                                            <div *ngIf="isCheque" class="col-md-4 col-12"
+                                                style="text-align: center; margin-top: 10px; float: right;">
+                                                <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                    class="example-full-width" appearance="fill">
+                                                    <mat-label>Cheque No:</mat-label>
+                                                    <input matInput placeholder="Ex. 20123528" id="check_Number" name="check_Number" [(ngModel)]="productVM.check_Number"
+                                                    #check_Number='ngModel'>
+                                                </mat-form-field>
+                                            </div>
+                                            <div *ngIf="isCard" class="col-12"
+                                                style="text-align: center; margin-top: 10px; float: right;">
+                                                <label>Bank</label><br>
+                                                <input class="ml-2" (change)="changeBank($event)" type="radio"
+                                                    value="combank" name="bank" ngModel> Commercial
+                                                <input class="ml-2" (change)="changeBank($event)" type="radio"
+                                                    value="others" name="bank" ngModel>
+                                                Others
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row">
+                                            <div class="col-md-3 col-12"
+                                                style="text-align: center; margin-top: 10px; float: right;">
+                                                <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                    class="example-full-width" appearance="fill">
+                                                    <mat-label>Payment </mat-label>
+                                                    <input matInput id="customer_Payment" name="customer_Payment" [(ngModel)]="productVM.customer_Payment"
+                                                    #customer_Payment='ngModel'>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3 col-12"
+                                                style="text-align: center; margin-top: 10px; float: right;">
+                                                <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                    class="example-full-width" appearance="fill">
+                                                    <mat-label>Balance </mat-label>
+                                                    <input disabled matInput id="customer_Balance" name="customer_Balance"  [(ngModel)]="productVM.customer_Balance"
+                                                    #customer_Balance='ngModel'>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3 col-12"
+                                                style="text-align: center; margin-top: 10px; float: right;">
+                                                <mat-form-field style="font-size: medium; font-weight: 700;"
+                                                    class="example-full-width" appearance="fill">
+                                                    <mat-label>Total </mat-label>
+                                                    <!-- <label>{{CalculateTotalSum()}}</label> -->
+                                                    <!-- <input disabled matInput id="customer_Bill" name="customer_Bill" [(ngModel)]="productVM.customer_Bill"
+                                                    #customer_Bill='ngModel'> -->
+                                                    <input disabled matInput id="customer_Bill" name="customer_Bill" [ngModel]="[CalculateTotalSum()]"
+                                                    #customer_Bill='ngModel'>
+                                                    <!-- <input disabled matInput id="customer_Bill" name="customer_Bill" [ngvalue]="CalculateTotalSum()"> -->
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div class="col-md-3 col-12"
+                                                style="text-align: center; margin-top: 10px; float: right;">
+                                                <div class="col-2"
+                                                    style="text-align: center; margin-top: 5px; float: right;">
+                                                    <button mat-raised-button (click)="saveBill()"
+                                                        style="width: 110px; background-color: rgb(26, 44, 94); height: 45px; float: right; color: white;">
+                                                        Save Cart </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Example label</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput"
+                                placeholder="Example input">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Another label</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2"
+                                placeholder="Another input">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <select class="form-control list-group list-group-flush" id="product">
+                                <option *ngFor="let prod of listProduct" [ngValue]="prod.id">{{prod.product_Name}}</option>
+                                </select> -->
+    <!-- <select class="form-control basicAutoSelect" name="simple_select"
+                                    placeholder="type to search..." data-url="./countries.json"
+                                    autocomplete="off"></select> -->
+    <!-- <input type="text" [formControl]="typeahead" placeholder="Type ahead !"
+                                    (input)="suggest()"> -->
+    <!-- <select *ngFor="let s of suggestions" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <option value="1">{{s}}</option>
+                                      </select> -->
+    <!-- <div class="suggestions" *ngIf="suggestions.length">
+                                    <select *ngFor="let s of suggestions" class="form-select form-select-sm"
+                                        aria-label=".form-select-sm example">
+                                        <option>{{s}}</option>
+                                    </select>
+                                </div> -->
+    <!-- <script>
+                                    $('.basicAutoSelect').autoComplete();
+                                </script> -->
+    <!-- <mat-form-field appearance="fill">
+                                    <mat-label>Item Code</mat-label>
+                                    <select matNativeControl required>
+                                        <option value="volvo">Volvo</option>
+                                        <option value="saab">Saab</option>
+                                        <option value="mercedes">Mercedes</option>
+                                        <option value="audi">Audi</option>
+                                    </select>
+                                </mat-form-field> -->
+    <!-- <mat-form-field class="example-full-width"> -->
+    <!-- <input type="text"
+                                           placeholder="Pick one"
+                                           aria-label="Number"
+                                           matInput
+                                           [formControl]="myControl"
+                                           [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete"> -->
+    <!-- <mat-option *ngFor="let option of options | async" [value]="option">
+                                        {{option}}
+                                      </mat-option> -->
+    <!-- </mat-autocomplete> -->
+    <!-- </mat-form-field> -->
+    <!-- <form method="post" [formGroup]="uploadForm">
+                                    <div class="form-group">
+                                        <label for="sem">Select Semester</label>
+                                        <input type="text" class="form-control" formControlName="branch" id="sem" placeholder="Branch Name">
+                                    </div>
+                                    <button type="submit" [disabled]="" class="btn btn-primary">Submit</button>
+                              </form> -->

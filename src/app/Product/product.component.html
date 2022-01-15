@@ -1,0 +1,200 @@
+<div class="main-content" style="margin-top: 0;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right mr-5 mr-lg-0">
+                    <button mat-raised-button class="btn" style="background-color: rgb(26, 44, 94); z-index: 1050;"
+                        data-toggle="modal" data-target="#exampleModal" (click)="addItem()">
+                        + New
+                    </button>
+                </div>
+
+                <div class="card">
+                    <!-- <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Simple Table</h4>
+                        <p class="card-category"> Here is a subtitle for this table</p>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Product Code</th>
+                                        <th>Product Name</th>
+                                        <th>Category</th>
+                                        <th>Brand</th>
+                                        <th>Company</th>
+                                        <th>Buy Price(Rs.)</th>
+                                        <th>Sell Price(Rs.)</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let prod of listProduct">
+                                    <tr>
+                                        <td>{{prod.itemCode}}</td>
+                                        <td>{{prod.itemName}}</td>
+                                        <td>{{findCategory(prod.category_Id)}}</td>
+                                        <td>{{findBrand(prod.brand_Id)}}</td>
+                                        <td>{{findCompany(prod.company_Id)}}</td>
+                                        <td>{{prod.buy_Price}}</td>
+                                        <td>{{prod.retail_Price}}</td>
+                                        <td>{{ prod.status == true ? 'Active' : 'InActive' }}</td>
+                                        <td style="text-align: center;">
+                                            <button mat-raised-button data-toggle="modal" (click)="editItem(prod)"
+                                                data-target="#exampleModal" class="btn btn-success btn-sm"><span
+                                                    class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                            <!-- </td>
+                                       <td> -->
+                                            <button mat-raised-button (click)="deleteItem(prod)"
+                                                class="btn btn-danger btn-sm"><span class="material-icons">
+                                                    delete_forever
+                                                </span></button>
+                                            <!-- </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}} Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="itemCode">Product Code</label>
+                        <input type="text" class="form-control" id="itemCode" [(ngModel)]="product.itemCode"
+                            #itemCode='ngModel' [ngModelOptions]="{ standalone: true }" placeholder="Type product code">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemName">Product Name</label>
+                        <input type="text" class="form-control" id="itemName" [(ngModel)]="product.itemName"
+                            #itemName="ngModel" [ngModelOptions]="{ standalone: true }" placeholder="Type product name">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control list-group list-group-flush" id="category" title="Single Select"
+                            data-size="2">
+                            <option disabled selected> Choose city</option>
+                            <option value="1">category 1</option>
+                            <option value="2">category 2</option>
+                        </select>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="brand">Brand</label>
+                        <select class="form-control list-group list-group-flush" id="brand" name="product.brand_Id"
+                            [(ngModel)]="product.brand_Id" [ngModelOptions]="{ standalone: true }" #brand="ngModel">
+                            <option *ngFor="let brand of listBrand" [ngValue]="brand.id">{{brand.brand_Name}}</option>
+                            <!-- <option disabled selected> Choose city</option> -->
+                            <!-- <option value="1">brand 1</option>
+                            <option value="2">brand 2</option> -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <!-- <select class="form-control list-group list-group-flush" id="company"> -->
+                        <select class="form-control list-group list-group-flush" id="company" name="product.company_Id"
+                            [(ngModel)]="product.company_Id" [ngModelOptions]="{ standalone: true }" #company="ngModel">
+                            <option *ngFor="let com of listCompany" [ngValue]="com.id">{{com.company_Name}}</option>
+                            <!-- <option disabled selected> Choose city</option> -->
+                            <!-- <option value="1">company 1</option>
+                            <option value="2">company 2</option> -->
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="productBuyPrice">Buy Price</label>
+                                <input type="number" class="form-control" id="productBuyPrice"
+                                    [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.buy_Price"
+                                    #productBuyPrice="ngModel" placeholder="Type product buy price">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="productSellPrice">Sell Price</label>
+                                <input type="number" class="form-control" id="productSellPrice"
+                                    [ngModelOptions]="{ standalone: true }" [(ngModel)]="product.retail_Price"
+                                    #productSellPrice="ngModel" placeholder="Type product sell price">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="productName">Buy Price</label>
+                        <input type="number" class="form-control" id="productName" placeholder="Type product price">
+                    </div> -->
+                    <!-- <div class="form-group">
+                        <label for="productName">Sell Price</label>
+                        <input type="number" class="form-control" id="productName" placeholder="Type product price">
+                    </div> -->
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select class="form-control list-group list-group-flush" id="category"
+                                    name="product.category_Id" [(ngModel)]="product.category_Id"
+                                    [ngModelOptions]="{ standalone: true }" #category="ngModel">
+                                    <option *ngFor="let cat of listCategory" [ngValue]="cat.id">{{cat.category_Name}}
+                                    </option>
+                                    <!-- <option disabled selected> Choose city</option> -->
+                                    <!-- <option value="1">category 1</option>
+                                    <option value="2">category 2</option> -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="productStatus">Status</label>
+                                <div class="togglebutton">
+                                    <label>
+                                        <input type="checkbox" name="product.status" [(ngModel)]="product.status"
+                                            #status='ngModel' required="true">
+                                        <span class="toggle"></span>
+                                        <!-- Toggle is on -->
+                                    </label>
+                                </div>
+                                <!-- <select class="form-control list-group list-group-flush" id="productStatus"
+                                    title="Single Select" data-size="2">
+                                    <option disabled selected> Choose city</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">InActive</option>
+                                </select> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="productStatus">Status</label>
+                        <select class="form-control list-group list-group-flush" id="productStatus"
+                            title="Single Select" data-size="2">
+                            <option disabled selected> Choose city</option>
+                            <option value="1">Active</option>
+                            <option value="2">InActive</option>
+                        </select>
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" (click)="save()" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

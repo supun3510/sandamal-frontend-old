@@ -1,0 +1,342 @@
+<div class="main-content" style="margin-top: 0;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <div class="card">
+                <div class="card-body">
+                      
+                </div>
+            </div> -->
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- <div class="col-12 row mt-3"> -->
+                    <!-- <div class="col-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Category</mat-label>
+                                <select matNativeControl required>
+                                  <option value="volvo">Volvo</option>
+                                  <option value="saab">Saab</option>
+                                  <option value="mercedes">Mercedes</option>
+                                  <option value="audi">Audi</option>
+                                </select>
+                              </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Brand</mat-label>
+                                <select matNativeControl required>
+                                  <option value="volvo">Volvo</option>
+                                  <option value="saab">Saab</option>
+                                  <option value="mercedes">Mercedes</option>
+                                  <option value="audi">Audi</option>
+                                </select>
+                              </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Item Code</mat-label>
+                                <select matNativeControl required>
+                                  <option value="volvo">Volvo</option>
+                                  <option value="saab">Saab</option>
+                                  <option value="mercedes">Mercedes</option>
+                                  <option value="audi">Audi</option>
+                                </select>
+                              </mat-form-field>
+                        </div> -->
+                    <!-- <div class="col-3" style="text-align: center; margin-top: 5px; float: right;">
+                            <button mat-raised-button  style="width: 120px; background-color: rgb(26, 44, 94); height: 45px; float: right; color: white;">    Search   </button>
+                        </div> -->
+                    <!-- </div> -->
+                    <!-- <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Simple Table</h4>
+                        <p class="card-category"> Here is a subtitle for this table</p>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <!-- <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Country
+                                    </th>
+                                    <th>
+                                        City
+                                    </th>
+                                </thead>
+                                <tbody *ngFor="let cat of listStock">
+                                    <tr>
+                                        <td>{{cat.name}}</td>
+                                        <td>{{cat.username}}</td>
+                                        <td>{{cat.email}}</td>
+                                        <td>{{cat.phone}}</td>
+                                        <td>
+                                            <button mat-raised-button (click)="openModel()"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button mat-raised-button (click)="openModel()"
+                                                class="btn btn-danger btn-sm"><span class="material-icons">
+                                                    delete_forever
+                                                </span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> -->
+                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Product Code</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <!-- <th>Status</th> -->
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let stock of listStock">
+                                    <tr>
+                                        <td>{{stock.item_Code}}</td>
+                                        <td>{{stock.item_Code}}</td>
+                                        <td>{{stock.quentity}}</td>
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" (click)="editItem(stock)"
+                                                data-target="#exampleModal" class="btn btn-success btn-sm"><span
+                                                    class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <!-- <td>
+                                            <button mat-raised-button (click)="openModel()"
+                                                class="btn btn-danger btn-sm"><span class="material-icons">
+                                                    delete_forever
+                                                </span></button>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                                <!-- <tbody>
+                                    <tr>
+
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                        <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                       <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                        <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                      <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                     <td>Active</td>
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                        <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                       <td>Active</td>
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                       <td>Active</td>
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                      <td>Active</td>
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                       <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>test_code</td>
+                                        <td>test_name</td>
+                                        <td>quantity</td>
+                                       <td>Active</td> 
+                                        <td style="text-align: center;">
+
+                                            <button mat-raised-button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-success btn-sm"><span class="material-icons">
+                                                    edit
+                                                </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody> -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <select class="form-control list-group list-group-flush" id="productName" title="Single Select" disabled
+                            data-size="2">
+                            <!-- <option disabled selected> Choose city</option> -->
+                            <option value="1">product 1</option>
+                            <option value="2">product 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="productCode">Product Code</label>
+                        <select class="form-control list-group list-group-flush" id="productCode" title="Single Select"
+                            data-size="2">
+                            <option disabled selected> Choose city</option>
+                            <option value="1">code 1</option>
+                            <option value="2">code 2</option>
+                        </select> -->
+
+                      
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" placeholder="Type quantity">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
